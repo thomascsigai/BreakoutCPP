@@ -18,6 +18,9 @@ constexpr Uint16 SCREEN_HEIGHT = 600;
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
 
+// Score display
+constexpr Uint16 SCORE_PANEL_SIZE = 100;
+
 // Paddle settings
 constexpr Uint16 PADDLE_WIDTH = 80;
 constexpr Uint16 PADDLE_HEIGHT = 6;
@@ -28,8 +31,11 @@ constexpr float BALL_SIZE = 8;
 constexpr float BALL_SPEED = 300;
 
 // Bricks settings
-constexpr Uint16 BRICK_WIDTH = 500;
-constexpr Uint16 BRICK_HEIGHT = 6;
+constexpr float BRICK_WIDTH = 33.5;
+constexpr float BRICK_HEIGHT = 10;
+
+constexpr Uint16 BRICKS_ROWS = 8;
+constexpr Uint16 BRICKS_NUMBER_PER_ROWS = 16;
 
 
 // KEYBINDS ---------------------------------------------------------
