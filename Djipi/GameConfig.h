@@ -7,7 +7,7 @@ using namespace std;
 
 // WINDOW SETTINGS --------------------------------------------------
 
-constexpr Uint16 SCREEN_WIDTH = 800;
+constexpr Uint16 SCREEN_WIDTH = 600;
 constexpr Uint16 SCREEN_HEIGHT = 600;
 
 
@@ -18,7 +18,19 @@ constexpr Uint16 SCREEN_HEIGHT = 600;
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
 
-constexpr Uint16 PLAYER_SPEED = 100;
+// Paddle settings
+constexpr Uint16 PADDLE_WIDTH = 80;
+constexpr Uint16 PADDLE_HEIGHT = 6;
+constexpr Uint16 PLAYER_SPEED = 400;
+
+// Ball settings
+constexpr float BALL_SIZE = 8;
+constexpr float BALL_SPEED = 300;
+
+// Bricks settings
+constexpr Uint16 BRICK_WIDTH = 500;
+constexpr Uint16 BRICK_HEIGHT = 6;
+
 
 // KEYBINDS ---------------------------------------------------------
 

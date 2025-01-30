@@ -5,13 +5,20 @@ namespace DjipiApp
 {
 	Player::Player()
 	{
-		m_Transform.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-		m_Transform.SetSize(50, 50);
+		m_Transform.SetPosition(SCREEN_WIDTH / 2 - PADDLE_WIDTH / 2, SCREEN_HEIGHT - PADDLE_HEIGHT - 20);
+		m_Transform.SetSize(PADDLE_WIDTH, PADDLE_HEIGHT);
 	}
 
 	void Player::Update(double deltaTime)
 	{
-		GameObject::Move(deltaTime);
+		m_Transform.x += m_VelX * deltaTime;
+
+		if (m_Transform.x < 0 || m_Transform.x > SCREEN_WIDTH - PADDLE_WIDTH)
+		{
+			m_Transform.x -= m_VelX * deltaTime;
+		}
+
+		m_Transform.UpdateCollider();
 	}
 
 	void Player::HandleEvent(SDL_Event& e)

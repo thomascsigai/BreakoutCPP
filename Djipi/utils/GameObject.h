@@ -28,9 +28,9 @@ namespace Djipi
 
 
 			//Debug draw collider
-			/*SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-			SDL_RenderDrawRectF(renderer, &transform.collider);
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);*/
+			SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+			SDL_RenderDrawRectF(renderer, &m_Transform.collider);
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 		}
 
 		virtual void Update(double deltaTime)
@@ -61,8 +61,11 @@ namespace Djipi
 		Transform GetTransform() const { return m_Transform; }
 		string GetName() const { return m_Name; }
 		SDL_FRect GetCollider() const { return m_Transform.collider; }
+		int GetVelocityX() const { return m_VelX; }
+		int GetVelocityY() const { return m_VelY; }
 
 		//Setters
 		void SetName(string name) { m_Name = name; }
+		void SetVelocity(int velX, int velY) { m_VelX = velX; m_VelY = velY; }
 	};
 }
