@@ -47,6 +47,8 @@ namespace DjipiApp
 		{
 			other.SetVelocity(other.GetVelocityX(), other.GetVelocityY() * -1);
 			m_Destroyed = true;
+
+			OnBrickDestroyed.user.data1 = &m_Type;
 			SDL_PushEvent(&OnBrickDestroyed);
 		}
 	}

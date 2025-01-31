@@ -12,5 +12,17 @@ namespace DjipiApp
 		void Update(double deltaTime) override;
 
 		void HandleEvent(SDL_Event& e) override;
+
+		void LooseLife();
+
+		void IncreaseScore(Uint16 points);
+
+		// Getters
+		Uint16 GetScore() const { return m_Score; }
+		Uint16 GetLives() const { return m_Lives; }
+
+	private:
+		Uint16 m_Lives;
+		Uint16 m_Score;
 	};
 }

@@ -84,7 +84,10 @@ namespace DjipiApp
 	void Ball::LoosePoint()
 	{
 		m_Transform.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		
 		m_VelX = 0;
 		m_VelY = 0;
+
+		SDL_PushEvent(&OnBallOut);
 	}
 }

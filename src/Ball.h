@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Djipi.h>
+#include <UserEvents.h>
 
 namespace DjipiApp
 {
@@ -19,5 +20,8 @@ namespace DjipiApp
 		void StartGame();
 
 		void LoosePoint();
+
+		// Events
+		SDL_Event OnBallOut = { UserEvents::BALL_OUT };
 	};
 }

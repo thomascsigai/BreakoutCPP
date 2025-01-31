@@ -105,7 +105,14 @@ int main(int argc, char* argv[])
 			// Handle your events here
 			if (e.type == UserEvents::BRICK_DESTROYED)
 			{
-				
+				Uint16 brickType = *static_cast<BrickType*>(e.user.data1);
+				player.IncreaseScore(brickType);
+				cout << player.GetScore() << endl;
+			}
+			
+			if (e.type == UserEvents::BALL_OUT)
+			{
+				player.LooseLife();
 			}
 
 			player.HandleEvent(e);
