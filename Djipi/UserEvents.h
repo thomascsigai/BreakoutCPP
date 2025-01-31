@@ -5,4 +5,6 @@
 namespace UserEvents
 {
 	// Place here your events you have to use in your app
+	// const inline Uint32 EVENT_TYPE = SDL_RegisterEvents(1);
+	const inline Uint32 BRICK_DESTROYED = SDL_RegisterEvents(1);
 }

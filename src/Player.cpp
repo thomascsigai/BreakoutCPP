@@ -13,7 +13,7 @@ namespace DjipiApp
 	{
 		m_Transform.x += m_VelX * deltaTime;
 
-		if (m_Transform.x < 0 || m_Transform.x > SCREEN_WIDTH - PADDLE_WIDTH)
+		if (m_Transform.x < -PADDLE_WIDTH + 5 || m_Transform.x > SCREEN_WIDTH - 5)
 		{
 			m_Transform.x -= m_VelX * deltaTime;
 		}
@@ -25,15 +25,11 @@ namespace DjipiApp
 	{
 		if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
 		{
-			if (e.key.keysym.sym == MOVE_KEYBIND.UP) m_VelY -= PLAYER_SPEED;
-			if (e.key.keysym.sym == MOVE_KEYBIND.DOWN) m_VelY += PLAYER_SPEED;
 			if (e.key.keysym.sym == MOVE_KEYBIND.LEFT) m_VelX -= PLAYER_SPEED;
 			if (e.key.keysym.sym == MOVE_KEYBIND.RIGHT) m_VelX += PLAYER_SPEED;
 		}
 		else if (e.type == SDL_KEYUP && e.key.repeat == 0)
 		{
-			if (e.key.keysym.sym == MOVE_KEYBIND.UP) m_VelY += PLAYER_SPEED;
-			if (e.key.keysym.sym == MOVE_KEYBIND.DOWN) m_VelY -= PLAYER_SPEED;
 			if (e.key.keysym.sym == MOVE_KEYBIND.LEFT) m_VelX += PLAYER_SPEED;
 			if (e.key.keysym.sym == MOVE_KEYBIND.RIGHT) m_VelX -= PLAYER_SPEED;
 		}

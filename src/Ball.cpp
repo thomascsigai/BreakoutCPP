@@ -5,11 +5,11 @@ namespace DjipiApp
 {
 	Ball::Ball()
 	{
-		m_Transform.SetPosition(SCREEN_WIDTH / 2 - BALL_SIZE / 2, SCREEN_HEIGHT - 50);
+		m_Transform.SetPosition(SCREEN_WIDTH / 2 - BALL_SIZE / 2, SCREEN_HEIGHT / 2);
 		m_Transform.SetSize(BALL_SIZE, BALL_SIZE);
 
-		m_VelX = BALL_SPEED;
-		m_VelY = -BALL_SPEED;
+		m_VelX = 0;
+		m_VelY = 0;
 	}
 
 	void Ball::Update(double deltaTime)
@@ -29,7 +29,7 @@ namespace DjipiApp
 		}
 
 		// Hit a up wall
-		if (m_Transform.y < 0)
+		if (m_Transform.y < 0 + SCORE_PANEL_SIZE)
 		{
 			m_VelY *= -1;
 			m_Transform.SetPosition(m_Transform.x, 0);
@@ -38,8 +38,7 @@ namespace DjipiApp
 		// Hit a down wall
 		if (m_Transform.y > SCREEN_HEIGHT - BALL_SIZE)
 		{
-			// Lose point
-			m_Transform.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+			LoosePoint();
 		}
 
 		GameObject::Move(deltaTime);
@@ -60,5 +59,32 @@ namespace DjipiApp
 			m_VelX = m_VelX * BALL_SPEED / norm;
 			m_VelY = m_VelY * BALL_SPEED / norm;
 		}
+	}
+
+	void Ball::HandleEvent(SDL_Event& e)
+	{
+		if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
+		{
+			if (e.key.keysym.sym == START_KEYBIND)
+			{
+				StartGame();
+			}
+		}
+	}
+
+	void Ball::StartGame()
+	{
+		if (m_VelX == 0 && m_VelY == 0)
+		{
+			m_VelX = BALL_SPEED;
+			m_VelY = BALL_SPEED;
+		}
+	}
+
+	void Ball::LoosePoint()
+	{
+		m_Transform.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+		m_VelX = 0;
+		m_VelY = 0;
 	}
 }

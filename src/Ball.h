@@ -12,5 +12,12 @@ namespace DjipiApp
 		void Update(double deltaTime) override;
 
 		void OnCollide(Djipi::GameObject& other) override;
+
+		void HandleEvent(SDL_Event& e) override;
+
+	private:
+		void StartGame();
+
+		void LoosePoint();
 	};
 }

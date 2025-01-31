@@ -43,16 +43,25 @@ bool CheckCollision(SDL_FRect a, SDL_FRect b)
 void LoadBricks(vector<DjipiApp::Brick>& bricks)
 {
 	int spaceBetweenBricks = (SCREEN_WIDTH / BRICKS_NUMBER_PER_ROWS) - BRICK_WIDTH;
+	int scoreDifference = BRICKS_ROWS / 4;
 
 	// Load the bricks column by column
 	for (int i = 0; i < BRICKS_NUMBER_PER_ROWS; i++)
 	{
+		int scoreIterator = 7;
 		for (int j = 0; j < BRICKS_ROWS; j++)
 		{
-			bricks.emplace_back(
-				i * BRICK_WIDTH + spaceBetweenBricks * (i + 0.5) ,
+			if (j > 0 && j % scoreDifference == 0)
+			{
+				scoreIterator -= scoreDifference;
+			}
+
+			DjipiApp::Brick brick = DjipiApp::Brick(
+				i * BRICK_WIDTH + spaceBetweenBricks * (i + 0.5),
 				j * BRICK_HEIGHT + spaceBetweenBricks * (j + 0.5) + SCORE_PANEL_SIZE,
-				1);
+				(BrickType) scoreIterator
+			);
+			bricks.push_back(brick);
 		}
 	}
 }
@@ -79,7 +88,7 @@ int main(int argc, char* argv[])
 	DjipiApp::Player player = DjipiApp::Player();
 	DjipiApp::Ball ball = DjipiApp::Ball();
 
-	vector<DjipiApp::Brick> bricks;
+	vector<DjipiApp::Brick> bricks = {};
 	LoadBricks(bricks);
 	
 	// GAME LOOP
@@ -94,7 +103,13 @@ int main(int argc, char* argv[])
 			}
 
 			// Handle your events here
+			if (e.type == UserEvents::BRICK_DESTROYED)
+			{
+				
+			}
+
 			player.HandleEvent(e);
+			ball.HandleEvent(e);
 		}
 
 		currentTime = SDL_GetTicks();
@@ -112,11 +127,13 @@ int main(int argc, char* argv[])
 			ball.OnCollide(player);
 		}
 
-		/*if (brick != NULL && CheckCollision(ball.GetCollider(), brick->GetCollider()))
+		for (int i = 0; i < bricks.size(); i++)
 		{
-			brick->OnCollide(ball);
-			brick = NULL;
-		}*/
+			if (!bricks[i].IsDestroyed() && CheckCollision(ball.GetCollider(), bricks[i].GetCollider()))
+			{
+				bricks[i].OnCollide(ball);
+			}
+		}
 		
 		// RENDERING 
 		SDL_SetRenderDrawColor(gRenderer, 0, 0, 0, 255);
@@ -130,7 +147,10 @@ int main(int argc, char* argv[])
 
 		for (int i = 0; i < bricks.size(); i++)
 		{
-			bricks[i].Render(gRenderer);
+			if (!bricks[i].IsDestroyed())
+			{
+				bricks[i].Render(gRenderer);
+			}
 		}
 
 		SDL_RenderPresent(gRenderer);
