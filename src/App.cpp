@@ -42,12 +42,17 @@ bool CheckCollision(SDL_FRect a, SDL_FRect b)
 
 void LoadBricks(vector<DjipiApp::Brick>& bricks)
 {
+	int spaceBetweenBricks = (SCREEN_WIDTH / BRICKS_NUMBER_PER_ROWS) - BRICK_WIDTH;
+
 	// Load the bricks column by column
 	for (int i = 0; i < BRICKS_NUMBER_PER_ROWS; i++)
 	{
 		for (int j = 0; j < BRICKS_ROWS; j++)
 		{
-			bricks.emplace_back(i * BRICK_WIDTH + 3.75 * (i + 1), j * BRICK_HEIGHT + 3.75 * (j + 1) + SCORE_PANEL_SIZE, 1);
+			bricks.emplace_back(
+				i * BRICK_WIDTH + spaceBetweenBricks * (i + 0.5) ,
+				j * BRICK_HEIGHT + spaceBetweenBricks * (j + 0.5) + SCORE_PANEL_SIZE,
+				1);
 		}
 	}
 }

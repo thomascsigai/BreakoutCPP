@@ -53,11 +53,12 @@ namespace DjipiApp
 			m_Transform.SetPosition(m_Transform.x, other.GetTransform().y - BALL_SIZE);
 
 			// X direction depends on where the ball touch the paddle
-			float distFromLeft = m_Transform.x + (BALL_SIZE / 2) - other.GetTransform().x;
-			float dirCoeff = (distFromLeft - PADDLE_WIDTH) / PADDLE_WIDTH;
+			float t = ((m_Transform.x + BALL_SIZE / 2)  - other.GetTransform().x) / PADDLE_WIDTH;
+			m_VelX = (t - 0.5) * DISPERSION_CONST * BALL_SPEED;
 
-			m_VelX = dirCoeff * BALL_SPEED;
-			cout << m_VelX << endl;
+			float norm = sqrt(pow(m_VelX, 2) + pow(m_VelY, 2));
+			m_VelX = m_VelX * BALL_SPEED / norm;
+			m_VelY = m_VelY * BALL_SPEED / norm;
 		}
 	}
 }
