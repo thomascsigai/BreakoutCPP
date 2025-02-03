@@ -10,6 +10,8 @@ namespace DjipiApp
 
 		m_VelX = 0;
 		m_VelY = 0;
+
+		m_SpeedMultiplier = 1;
 	}
 
 	void Ball::Update(double deltaTime)
@@ -41,7 +43,20 @@ namespace DjipiApp
 			LoosePoint();
 		}
 
-		GameObject::Move(deltaTime);
+		DjipiApp::Ball::Move(deltaTime);
+	}
+
+	void Ball::Move(double deltaTime)
+	{
+		m_Transform.x += m_VelX * m_SpeedMultiplier * deltaTime;
+		m_Transform.y += m_VelY * m_SpeedMultiplier * deltaTime;
+
+		m_Transform.UpdateCollider();
+	}
+
+	void Ball::IncreaseSpeed(Uint16 pointsScored)
+	{
+		m_SpeedMultiplier += (float) pointsScored / 15;
 	}
 
 	void Ball::OnCollide(GameObject& other)
@@ -87,6 +102,8 @@ namespace DjipiApp
 		
 		m_VelX = 0;
 		m_VelY = 0;
+
+		m_SpeedMultiplier = 1;
 
 		SDL_PushEvent(&OnBallOut);
 	}

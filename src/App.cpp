@@ -107,6 +107,7 @@ int main(int argc, char* argv[])
 			{
 				Uint16 brickType = *static_cast<BrickType*>(e.user.data1);
 				player.IncreaseScore(brickType);
+				ball.IncreaseSpeed(brickType);
 				cout << player.GetScore() << endl;
 			}
 			

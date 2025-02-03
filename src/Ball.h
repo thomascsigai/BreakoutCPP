@@ -16,7 +16,14 @@ namespace DjipiApp
 
 		void HandleEvent(SDL_Event& e) override;
 
+		// Override of Move to take speed multiplier in account
+		void Move(double deltaTime) override;
+
+		void IncreaseSpeed(Uint16 multiplier);
+
 	private:
+		float m_SpeedMultiplier;
+
 		void StartGame();
 
 		void LoosePoint();
