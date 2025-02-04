@@ -26,12 +26,14 @@ constexpr Uint16 SCORE_PANEL_SIZE = 100;
 // Paddle settings
 constexpr Uint16 PADDLE_WIDTH = 80;
 constexpr Uint16 PADDLE_HEIGHT = 6;
-constexpr Uint16 PLAYER_SPEED = 500;
+constexpr Uint16 PLAYER_SPEED = 600;
 constexpr Uint16 DISPERSION_CONST = 2;
 
 // Ball settings
 constexpr float BALL_SIZE = 8;
 constexpr float BALL_SPEED = 300;
+constexpr float BALL_MAX_SPEED = 600;
+constexpr int BALL_SPEED_MULT_MODIFIER = 30;
 
 // Bricks settings
 constexpr float BRICK_WIDTH = 42;

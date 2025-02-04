@@ -50,13 +50,21 @@ namespace DjipiApp
 	{
 		m_Transform.x += m_VelX * m_SpeedMultiplier * deltaTime;
 		m_Transform.y += m_VelY * m_SpeedMultiplier * deltaTime;
+		
+		float normSpeed = pow(m_VelX * m_SpeedMultiplier, 2) + pow(m_VelY * m_SpeedMultiplier, 2);
+		cout << sqrt(normSpeed) << endl;
 
 		m_Transform.UpdateCollider();
 	}
 
 	void Ball::IncreaseSpeed(Uint16 pointsScored)
 	{
-		m_SpeedMultiplier += (float) pointsScored / 15;
+		float normSpeed = pow(m_VelX * m_SpeedMultiplier, 2) + pow(m_VelY * m_SpeedMultiplier, 2);
+
+		if (normSpeed < BALL_MAX_SPEED * BALL_MAX_SPEED)
+		{
+			m_SpeedMultiplier += (float)pointsScored / BALL_SPEED_MULT_MODIFIER;
+		}
 	}
 
 	void Ball::OnCollide(GameObject& other)
@@ -66,7 +74,7 @@ namespace DjipiApp
 			m_VelY *= -1;
 			m_Transform.SetPosition(m_Transform.x, other.GetTransform().y - BALL_SIZE);
 
-			// X direction depends on where the ball touch the paddle
+			//// X direction depends on where the ball touch the paddle
 			float t = ((m_Transform.x + BALL_SIZE / 2)  - other.GetTransform().x) / PADDLE_WIDTH;
 			m_VelX = (t - 0.5) * DISPERSION_CONST * BALL_SPEED;
 
@@ -91,7 +99,7 @@ namespace DjipiApp
 	{
 		if (m_VelX == 0 && m_VelY == 0)
 		{
-			m_VelX = BALL_SPEED;
+			m_VelX = 1;
 			m_VelY = BALL_SPEED;
 		}
 	}
