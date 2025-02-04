@@ -15,6 +15,8 @@ constexpr Uint16 SCREEN_HEIGHT = 700;
 
 #define RESOURCES_DIR_PATH "resources/"
 
+#define BIT_FONT_DIR_PATH "resources/fonts/bit5x3.ttf"
+
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
 

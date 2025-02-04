@@ -9,6 +9,7 @@
 #include <SDL_mixer.h>
 
 #include <vector>
+#include <string>
 
 #include <Player.h>
 #include <Ball.h>
@@ -18,6 +19,13 @@
 SDL_Window* gWindow = NULL;
 // The renderer 
 SDL_Renderer* gRenderer = NULL;
+// The fonr
+TTF_Font* gFont = NULL;
+
+// UI Textures
+Djipi::Texture gScoreTexture;
+Djipi::Texture gLivesTexture;
+
 
 bool CheckCollision(SDL_FRect a, SDL_FRect b)
 {
@@ -66,6 +74,39 @@ void LoadBricks(vector<DjipiApp::Brick>& bricks)
 	}
 }
 
+void LoadScore(int points, int lives)
+{
+	//Render text
+	SDL_Color textColor = { 255, 255, 255 };
+	if (!gScoreTexture.LoadFromRenderedText("Score: " + to_string(points), textColor, gFont, gRenderer))
+	{
+		printf("Failed to render text texture!\n");
+	}
+	if (!gLivesTexture.LoadFromRenderedText("Lives: " + to_string(lives), textColor, gFont, gRenderer))
+	{
+		printf("Failed to render text texture!\n");
+	}
+}
+
+bool LoadFont()
+{
+	bool success = true;
+
+	//Open the font
+	gFont = TTF_OpenFont(BIT_FONT_DIR_PATH, 60);
+	if (gFont == NULL)
+	{
+		printf("Failed to load bit font! SDL_ttf Error: %s\n", TTF_GetError());
+		success = false;
+	}
+	else
+	{
+		LoadScore(0, 3);
+	}
+
+	return success;
+}
+
 int main(int argc, char* argv[])
 {
 	bool quit = false;
@@ -90,6 +131,9 @@ int main(int argc, char* argv[])
 
 	vector<DjipiApp::Brick> bricks = {};
 	LoadBricks(bricks);
+
+	// UI
+	LoadFont();
 	
 	// GAME LOOP
 	while (!quit)
@@ -108,12 +152,14 @@ int main(int argc, char* argv[])
 				Uint16 brickType = *static_cast<BrickType*>(e.user.data1);
 				player.IncreaseScore(brickType);
 				ball.IncreaseSpeed(brickType);
-				cout << player.GetScore() << endl;
+
+				LoadScore(player.GetScore(), player.GetLives());
 			}
 			
 			if (e.type == UserEvents::BALL_OUT)
 			{
 				player.LooseLife();
+				LoadScore(player.GetScore(), player.GetLives());
 			}
 
 			player.HandleEvent(e);
@@ -160,6 +206,11 @@ int main(int argc, char* argv[])
 				bricks[i].Render(gRenderer);
 			}
 		}
+
+		// UI Renders
+		gScoreTexture.Render(10, (SCORE_PANEL_SIZE - gScoreTexture.GetHeight()) / 2, gRenderer);
+		gLivesTexture.Render(SCREEN_WIDTH - gLivesTexture.GetWidth() - 10, 
+			(SCORE_PANEL_SIZE - gLivesTexture.GetHeight()) / 2, gRenderer);
 
 		SDL_RenderPresent(gRenderer);
 	}
