@@ -12,8 +12,22 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_mixer REQUIRED)
 
-add_executable (BreakoutCPP "src/App.cpp" "Djipi/utils/Timer.cpp" "Djipi/utils/Texture.h" "Djipi/utils/Texture.cpp" "Djipi/UserEvents.h" "Djipi/Djipi.h" "Djipi/utils/Window.h" "Djipi/utils/Window.cpp" "Djipi/utils/GameObject.h" "src/Player.h" "src/Player.cpp" "Djipi/utils/Transform.h" "src/Ball.h" "src/Ball.cpp" "src/Brick.h" "src/Brick.cpp")
-target_include_directories(BreakoutCPP PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/Djipi" "${CMAKE_CURRENT_SOURCE_DIR}/src" "${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils")
+add_executable (BreakoutCPP
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/App.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils/Timer.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils/Texture.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils/Window.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Player.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Ball.cpp"
+	"${CMAKE_CURRENT_SOURCE_DIR}/src/Brick.cpp"
+)
+
+target_include_directories(BreakoutCPP PRIVATE 
+"${CMAKE_CURRENT_SOURCE_DIR}/Djipi"
+"${CMAKE_CURRENT_SOURCE_DIR}/src"
+"${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils"
+"${CMAKE_CURRENT_SOURCE_DIR}/Djipi/utils/DJMath"
+)
 
 target_link_libraries(BreakoutCPP PRIVATE SDL2::SDL2 SDL2::SDL2main SDL2_ttf::SDL2_ttf SDL2_mixer::SDL2_mixer)
 
