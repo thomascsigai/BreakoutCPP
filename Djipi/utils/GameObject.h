@@ -15,6 +15,7 @@ namespace Djipi
 		string m_Name;
 		Transform m_Transform;
 		int m_VelX = 0, m_VelY = 0;
+		SDL_Color m_Color = { 255, 255, 255, 255 };
 
 	public:
 		GameObject() {}
@@ -23,13 +24,14 @@ namespace Djipi
 
 		virtual void Render(SDL_Renderer* renderer)
 		{
+			SDL_SetRenderDrawColor(renderer, m_Color.r, m_Color.g, m_Color.b, m_Color.a);
 			SDL_FRect rect = { m_Transform.x, m_Transform.y, m_Transform.w, m_Transform.h };
 			SDL_RenderFillRectF(renderer, &rect);
-
+			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 			//Debug draw collider
 			/*SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-			SDL_RenderDrawRectF(renderer, &transform.collider);
+			SDL_RenderDrawRectF(renderer, &m_Transform.collider);
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);*/
 		}
 
@@ -61,8 +63,12 @@ namespace Djipi
 		Transform GetTransform() const { return m_Transform; }
 		string GetName() const { return m_Name; }
 		SDL_FRect GetCollider() const { return m_Transform.collider; }
+		int GetVelocityX() const { return m_VelX; }
+		int GetVelocityY() const { return m_VelY; }
 
 		//Setters
 		void SetName(string name) { m_Name = name; }
+		void SetVelocity(int velX, int velY) { m_VelX = velX; m_VelY = velY; }
+		void SetColor(Uint8 r, Uint8 g, Uint8 b, Uint8 a) { m_Color = { r, g, b, a }; }
 	};
 }
