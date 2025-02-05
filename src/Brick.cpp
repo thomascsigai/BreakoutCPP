@@ -52,4 +52,9 @@ namespace DjipiApp
 			SDL_PushEvent(&OnBrickDestroyed);
 		}
 	}
+
+	void Brick::Reset()
+	{
+		m_Destroyed = false;
+	}
 }

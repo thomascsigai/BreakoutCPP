@@ -12,6 +12,8 @@ namespace DjipiApp
 
 		void OnCollide(Djipi::GameObject& other) override;
 
+		void Reset();
+
 		// Getters
 		bool IsDestroyed() const { return m_Destroyed; }
 

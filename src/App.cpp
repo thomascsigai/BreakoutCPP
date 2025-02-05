@@ -75,6 +75,14 @@ void LoadBricks(vector<DjipiApp::Brick>& bricks)
 	}
 }
 
+void ResetBricks(vector<DjipiApp::Brick>& bricks)
+{
+	for (int i = 0; i < bricks.size(); i++)
+	{
+		bricks[i].Reset();
+	}
+}
+
 void LoadScore(int points, int lives)
 {
 	//Render text
@@ -125,9 +133,12 @@ int main(int argc, char* argv[])
 	gWindow = appWindow.GetWindow();
 	gRenderer = appWindow.GetRenderer();
 
+	// Time
 	Uint64 previousTime = SDL_GetTicks();
 	Uint64 currentTime;
 	double deltaTime;
+
+	Djipi::Timer resetTimer = Djipi::Timer();
 
 	// GAMEOBJECTS
 	// Create your gameobjects here
@@ -184,10 +195,15 @@ int main(int argc, char* argv[])
 			if (e.type == UserEvents::GAME_OVER)
 			{
 				LoadMessage("Game Over");
+				resetTimer.Start();
 			}
 
 			player.HandleEvent(e);
-			ball.HandleEvent(e);
+			
+			if (!resetTimer.IsStarted())
+			{
+				ball.HandleEvent(e);
+			}
 		}
 
 		currentTime = SDL_GetTicks();
@@ -196,6 +212,18 @@ int main(int argc, char* argv[])
 
 		// UPDATING
 		// Updates methods here
+
+		// Reset game
+		if (resetTimer.IsStarted() && resetTimer.GetTicks() > RESET_TIME)
+		{
+			resetTimer.Stop();
+
+			player.Reset();
+			ResetBricks(bricks);
+
+			LoadScore(player.GetScore(), player.GetLives());
+			LoadMessage("Press Space");
+		}
 
 		player.Update(deltaTime);
 		ball.Update(deltaTime);

@@ -20,6 +20,9 @@ constexpr Uint16 SCREEN_HEIGHT = 700;
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
 
+// Timers (in ms)
+constexpr Uint32 RESET_TIME = 5000;
+
 // Score display
 constexpr Uint16 SCORE_PANEL_SIZE = 100;
 
