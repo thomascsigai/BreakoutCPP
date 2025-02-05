@@ -50,9 +50,6 @@ namespace DjipiApp
 	{
 		m_Transform.x += m_VelX * m_SpeedMultiplier * deltaTime;
 		m_Transform.y += m_VelY * m_SpeedMultiplier * deltaTime;
-		
-		float normSpeed = pow(m_VelX * m_SpeedMultiplier, 2) + pow(m_VelY * m_SpeedMultiplier, 2);
-		cout << sqrt(normSpeed) << endl;
 
 		m_Transform.UpdateCollider();
 	}
@@ -101,6 +98,8 @@ namespace DjipiApp
 		{
 			m_VelX = 1;
 			m_VelY = BALL_SPEED;
+
+			SDL_PushEvent(&OnStartGame);
 		}
 	}
 

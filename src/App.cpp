@@ -25,7 +25,8 @@ TTF_Font* gFont = NULL;
 // UI Textures
 Djipi::Texture gScoreTexture;
 Djipi::Texture gLivesTexture;
-
+Djipi::Texture gMessageTexture;
+bool showMessage = true;
 
 bool CheckCollision(SDL_FRect a, SDL_FRect b)
 {
@@ -80,31 +81,36 @@ void LoadScore(int points, int lives)
 	SDL_Color textColor = { 255, 255, 255 };
 	if (!gScoreTexture.LoadFromRenderedText("Score: " + to_string(points), textColor, gFont, gRenderer))
 	{
-		printf("Failed to render text texture!\n");
+		printf("Failed to render score texture!\n");
 	}
 	if (!gLivesTexture.LoadFromRenderedText("Lives: " + to_string(lives), textColor, gFont, gRenderer))
 	{
-		printf("Failed to render text texture!\n");
+		printf("Failed to render lives texture!\n");
 	}
 }
 
-bool LoadFont()
+// Load a texture to display a gameover / start message
+void LoadMessage(std::string message)
 {
-	bool success = true;
+	SDL_Color textColor = { 255, 255, 255 };
+	if (!gMessageTexture.LoadFromRenderedText(message, textColor, gFont, gRenderer))
+	{
+		printf("Failed to render message texture!\n");
+	}
+}
 
+void LoadFont()
+{
 	//Open the font
 	gFont = TTF_OpenFont(BIT_FONT_DIR_PATH, 60);
 	if (gFont == NULL)
 	{
 		printf("Failed to load bit font! SDL_ttf Error: %s\n", TTF_GetError());
-		success = false;
 	}
 	else
 	{
 		LoadScore(0, 3);
 	}
-
-	return success;
 }
 
 int main(int argc, char* argv[])
@@ -134,6 +140,7 @@ int main(int argc, char* argv[])
 
 	// UI
 	LoadFont();
+	LoadMessage("Press Space");
 	
 	// GAME LOOP
 	while (!quit)
@@ -160,6 +167,23 @@ int main(int argc, char* argv[])
 			{
 				player.LooseLife();
 				LoadScore(player.GetScore(), player.GetLives());
+				showMessage = true;
+
+				if (player.GetLives() <= 0)
+				{
+					SDL_Event OnGameOver = { UserEvents::GAME_OVER };
+					SDL_PushEvent(&OnGameOver);
+				}
+			}
+
+			if (e.type == UserEvents::START_GAME)
+			{
+				showMessage = false;
+			}
+
+			if (e.type == UserEvents::GAME_OVER)
+			{
+				LoadMessage("Game Over");
 			}
 
 			player.HandleEvent(e);
@@ -211,6 +235,11 @@ int main(int argc, char* argv[])
 		gScoreTexture.Render(10, (SCORE_PANEL_SIZE - gScoreTexture.GetHeight()) / 2, gRenderer);
 		gLivesTexture.Render(SCREEN_WIDTH - gLivesTexture.GetWidth() - 10, 
 			(SCORE_PANEL_SIZE - gLivesTexture.GetHeight()) / 2, gRenderer);
+
+		if (showMessage)
+		{
+			gMessageTexture.Render(SCREEN_WIDTH / 2 - gMessageTexture.GetWidth() / 2, SCREEN_HEIGHT / 2 + 50, gRenderer);
+		}
 
 		SDL_RenderPresent(gRenderer);
 	}

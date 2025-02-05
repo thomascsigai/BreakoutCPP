@@ -54,4 +54,10 @@ namespace DjipiApp
 	{
 		m_Score += points;
 	}
+
+	void Player::Reset()
+	{
+		m_Lives = 3;
+		m_Score = 0;
+	}
 }

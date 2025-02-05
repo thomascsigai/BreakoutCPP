@@ -17,6 +17,8 @@ namespace DjipiApp
 
 		void IncreaseScore(Uint16 points);
 
+		void Reset();
+
 		// Getters
 		Uint16 GetScore() const { return m_Score; }
 		Uint16 GetLives() const { return m_Lives; }

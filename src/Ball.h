@@ -30,5 +30,6 @@ namespace DjipiApp
 
 		// Events
 		SDL_Event OnBallOut = { UserEvents::BALL_OUT };
+		SDL_Event OnStartGame = { UserEvents::START_GAME };
 	};
 }
