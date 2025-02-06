@@ -21,6 +21,8 @@ namespace DjipiApp
 
 		void IncreaseSpeed(Uint16 multiplier);
 
+		void Reset();
+
 	private:
 		float m_SpeedMultiplier;
 
@@ -30,6 +32,7 @@ namespace DjipiApp
 
 		// Events
 		SDL_Event OnBallOut = { UserEvents::BALL_OUT };
+		SDL_Event OnBallTouch = { UserEvents::BALL_TOUCH };
 		SDL_Event OnStartGame = { UserEvents::START_GAME };
 	};
 }
