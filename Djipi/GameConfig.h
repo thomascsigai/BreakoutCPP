@@ -22,6 +22,7 @@ constexpr Uint16 SCREEN_HEIGHT = 700;
 #define POINT_SCORE_SOUND_PATH "resources/sounds/pointScore.wav"
 #define LOOSE_LIFE_SOUND_PATH "resources/sounds/loosePoint.wav"
 #define GAME_OVER_SOUND_PATH "resources/sounds/gameOver.wav"
+#define GAME_WIN_SOUND_PATH "resources/sounds/win.wav"
 
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
@@ -33,15 +34,15 @@ constexpr Uint32 RESET_TIME = 5000;
 constexpr Uint16 SCORE_PANEL_SIZE = 100;
 
 // Paddle settings
-constexpr Uint16 PADDLE_WIDTH = 80;
+constexpr Uint16 PADDLE_WIDTH = 645;
 constexpr Uint16 PADDLE_HEIGHT = 6;
 constexpr Uint16 PLAYER_SPEED = 600;
 constexpr Uint16 DISPERSION_CONST = 2;
 
 // Ball settings
 constexpr float BALL_SIZE = 8;
-constexpr float BALL_SPEED = 300;
-constexpr float BALL_MAX_SPEED = 600;
+constexpr float BALL_SPEED = 1000;
+constexpr float BALL_MAX_SPEED = 1000;
 constexpr int BALL_SPEED_MULT_MODIFIER = 30;
 
 // Bricks settings

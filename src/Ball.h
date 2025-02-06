@@ -21,6 +21,8 @@ namespace DjipiApp
 
 		void IncreaseSpeed(Uint16 multiplier);
 
+		void Reset();
+
 	private:
 		float m_SpeedMultiplier;
 

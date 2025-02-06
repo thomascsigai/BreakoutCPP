@@ -33,6 +33,7 @@ Mix_Chunk* gBallCollisionSound = NULL;
 Mix_Chunk* gPointScoreSound = NULL;
 Mix_Chunk* gLooseLifeSound = NULL;
 Mix_Chunk* gGameOverSound = NULL;
+Mix_Chunk* gWinSound = NULL;
 
 bool CheckCollision(SDL_FRect a, SDL_FRect b)
 {
@@ -138,6 +139,12 @@ void LoadSounds()
 	{
 		cerr << "Failed to load game over sound : " << Mix_GetError() << endl;
 	}
+	
+	gWinSound = Mix_LoadWAV(GAME_WIN_SOUND_PATH);
+	if (gWinSound == NULL)
+	{
+		cerr << "Failed to load game win sound : " << Mix_GetError() << endl;
+	}
 }
 
 void LoadFont()
@@ -209,6 +216,12 @@ int main(int argc, char* argv[])
 				Mix_PlayChannel(-1, gPointScoreSound, 0);
 
 				LoadScore(player.GetScore(), player.GetLives());
+
+				if (player.GetScore() >= 448)
+				{
+					SDL_Event OnGameWin = { UserEvents::GAME_WIN };
+					SDL_PushEvent(&OnGameWin);
+				}
 			}
 			
 			if (e.type == UserEvents::BALL_OUT)
@@ -232,9 +245,19 @@ int main(int argc, char* argv[])
 
 			if (e.type == UserEvents::GAME_OVER)
 			{
+				showMessage = true;
 				LoadMessage("Game Over");
 				resetTimer.Start();
 				Mix_PlayChannel(-1, gGameOverSound, 0);
+			}
+			
+			if (e.type == UserEvents::GAME_WIN)
+			{
+				showMessage = true;
+				LoadMessage("You Win");
+				resetTimer.Start();
+				ball.Reset();
+				Mix_PlayChannel(-1, gWinSound, 0);
 			}
 
 			if (e.type == UserEvents::BALL_TOUCH)
