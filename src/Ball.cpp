@@ -32,8 +32,8 @@ namespace DjipiApp
 			SDL_PushEvent(&OnBallTouch);
 		}
 
-		// Hit a up wall
-		if (m_Transform.y < 0 + SCORE_PANEL_SIZE)
+		// Hit a top wall
+		if (m_Transform.y < 0)
 		{
 			m_VelY *= -1;
 			m_Transform.SetPosition(m_Transform.x, 0);
