@@ -17,6 +17,12 @@ constexpr Uint16 SCREEN_HEIGHT = 700;
 
 #define BIT_FONT_DIR_PATH "resources/fonts/bit5x3.ttf"
 
+// Sounds
+#define BALL_TOUCH_SOUND_PATH "resources/sounds/ballTouch.wav"
+#define POINT_SCORE_SOUND_PATH "resources/sounds/pointScore.wav"
+#define LOOSE_LIFE_SOUND_PATH "resources/sounds/loosePoint.wav"
+#define GAME_OVER_SOUND_PATH "resources/sounds/gameOver.wav"
+
 
 // GAME SPECIFIC SETTINGS -------------------------------------------
 

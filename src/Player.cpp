@@ -40,14 +40,7 @@ namespace DjipiApp
 
 	void Player::LooseLife()
 	{
-		if (--m_Lives <= 0)
-		{
-			cout << "Mort totale" << endl;
-		}
-		else
-		{
-			cout << "Mort pas du tout totale" << endl;
-		}
+		m_Lives--;
 	}
 
 	void Player::IncreaseScore(Uint16 points)

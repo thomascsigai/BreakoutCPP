@@ -21,6 +21,7 @@ namespace DjipiApp
 		{
 			m_VelX *= -1;
 			m_Transform.SetPosition(0, m_Transform.y);
+			SDL_PushEvent(&OnBallTouch);
 		}
 		
 		// Hit a right wall
@@ -28,6 +29,7 @@ namespace DjipiApp
 		{
 			m_VelX *= -1;
 			m_Transform.SetPosition(SCREEN_WIDTH - BALL_SIZE, m_Transform.y);
+			SDL_PushEvent(&OnBallTouch);
 		}
 
 		// Hit a up wall
@@ -35,6 +37,7 @@ namespace DjipiApp
 		{
 			m_VelY *= -1;
 			m_Transform.SetPosition(m_Transform.x, 0);
+			SDL_PushEvent(&OnBallTouch);
 		}
 
 		// Hit a down wall
@@ -70,6 +73,7 @@ namespace DjipiApp
 		{
 			m_VelY *= -1;
 			m_Transform.SetPosition(m_Transform.x, other.GetTransform().y - BALL_SIZE);
+			SDL_PushEvent(&OnBallTouch);
 
 			//// X direction depends on where the ball touch the paddle
 			float t = ((m_Transform.x + BALL_SIZE / 2)  - other.GetTransform().x) / PADDLE_WIDTH;

@@ -19,7 +19,7 @@
 SDL_Window* gWindow = NULL;
 // The renderer 
 SDL_Renderer* gRenderer = NULL;
-// The fonr
+// The font
 TTF_Font* gFont = NULL;
 
 // UI Textures
@@ -27,6 +27,12 @@ Djipi::Texture gScoreTexture;
 Djipi::Texture gLivesTexture;
 Djipi::Texture gMessageTexture;
 bool showMessage = true;
+
+// Sounds
+Mix_Chunk* gBallCollisionSound = NULL;
+Mix_Chunk* gPointScoreSound = NULL;
+Mix_Chunk* gLooseLifeSound = NULL;
+Mix_Chunk* gGameOverSound = NULL;
 
 bool CheckCollision(SDL_FRect a, SDL_FRect b)
 {
@@ -107,6 +113,33 @@ void LoadMessage(std::string message)
 	}
 }
 
+void LoadSounds()
+{
+	gBallCollisionSound = Mix_LoadWAV(BALL_TOUCH_SOUND_PATH);
+	if (gBallCollisionSound == NULL)
+	{
+		cerr << "Failed to load Ball touch sound : " << Mix_GetError() << endl;
+	}
+	
+	gPointScoreSound = Mix_LoadWAV(POINT_SCORE_SOUND_PATH);
+	if (gPointScoreSound == NULL)
+	{
+		cerr << "Failed to load Point Score sound : " << Mix_GetError() << endl;
+	}
+	
+	gLooseLifeSound = Mix_LoadWAV(LOOSE_LIFE_SOUND_PATH);
+	if (gLooseLifeSound == NULL)
+	{
+		cerr << "Failed to load loose life sound : " << Mix_GetError() << endl;
+	}
+	
+	gGameOverSound = Mix_LoadWAV(GAME_OVER_SOUND_PATH);
+	if (gGameOverSound == NULL)
+	{
+		cerr << "Failed to load game over sound : " << Mix_GetError() << endl;
+	}
+}
+
 void LoadFont()
 {
 	//Open the font
@@ -152,6 +185,9 @@ int main(int argc, char* argv[])
 	// UI
 	LoadFont();
 	LoadMessage("Press Space");
+
+	// Sounds
+	LoadSounds();
 	
 	// GAME LOOP
 	while (!quit)
@@ -170,6 +206,7 @@ int main(int argc, char* argv[])
 				Uint16 brickType = *static_cast<BrickType*>(e.user.data1);
 				player.IncreaseScore(brickType);
 				ball.IncreaseSpeed(brickType);
+				Mix_PlayChannel(-1, gPointScoreSound, 0);
 
 				LoadScore(player.GetScore(), player.GetLives());
 			}
@@ -179,6 +216,7 @@ int main(int argc, char* argv[])
 				player.LooseLife();
 				LoadScore(player.GetScore(), player.GetLives());
 				showMessage = true;
+				Mix_PlayChannel(-1, gLooseLifeSound, 0);
 
 				if (player.GetLives() <= 0)
 				{
@@ -196,6 +234,12 @@ int main(int argc, char* argv[])
 			{
 				LoadMessage("Game Over");
 				resetTimer.Start();
+				Mix_PlayChannel(-1, gGameOverSound, 0);
+			}
+
+			if (e.type == UserEvents::BALL_TOUCH)
+			{
+				Mix_PlayChannel(-1, gBallCollisionSound, 0);
 			}
 
 			player.HandleEvent(e);

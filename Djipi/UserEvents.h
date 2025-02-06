@@ -9,6 +9,7 @@ namespace UserEvents
 	const inline Uint32 BRICK_DESTROYED = SDL_RegisterEvents(1);
 	
 	const inline Uint32 BALL_OUT = SDL_RegisterEvents(1);
+	const inline Uint32 BALL_TOUCH = SDL_RegisterEvents(1);
 
 	const inline Uint32 START_GAME = SDL_RegisterEvents(1);
 
