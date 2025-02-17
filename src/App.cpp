@@ -58,6 +58,8 @@ bool CheckCollision(SDL_FRect a, SDL_FRect b)
 
 void LoadBricks(vector<DjipiApp::Brick>& bricks)
 {
+	bricks.reserve(BRICKS_NUMBER_PER_ROWS * BRICKS_ROWS);
+
 	int spaceBetweenBricks = (SCREEN_WIDTH / BRICKS_NUMBER_PER_ROWS) - BRICK_WIDTH;
 	int scoreDifference = BRICKS_ROWS / 4;
 
@@ -72,12 +74,11 @@ void LoadBricks(vector<DjipiApp::Brick>& bricks)
 				scoreIterator -= scoreDifference;
 			}
 
-			DjipiApp::Brick brick = DjipiApp::Brick(
+			bricks.emplace_back(
 				i * BRICK_WIDTH + spaceBetweenBricks * (i + 0.5),
 				j * BRICK_HEIGHT + spaceBetweenBricks * (j + 0.5) + SCORE_PANEL_SIZE,
-				(BrickType) scoreIterator
+				(BrickType)scoreIterator
 			);
-			bricks.push_back(brick);
 		}
 	}
 }
@@ -186,7 +187,7 @@ int main(int argc, char* argv[])
 	DjipiApp::Player player = DjipiApp::Player();
 	DjipiApp::Ball ball = DjipiApp::Ball();
 
-	vector<DjipiApp::Brick> bricks = {};
+	vector<DjipiApp::Brick> bricks;
 	LoadBricks(bricks);
 
 	// UI
